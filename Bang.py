@@ -1147,7 +1147,6 @@ def main():
                     #2. play any number of cards
                     #provide a list of locations that you can click on, the run it through events()
                     click_spots = click_spot(click)
-                    print("click spots: ", click_spots)
                     #[ ((#,#),(#,#)), ((#,#),(#,#)), ]
                     card_num = events(0, click_spots)
                     if type(card_num) == str:
@@ -1251,7 +1250,7 @@ def main():
                                     continue
                             
                             #[ ((#,#),(#,#)), ((#,#),(#,#)), ]
-                            target = events(0, [rect2box(cards_rect)]+[red_player_box])
+                            target = events(0, [rect2box(cards_rect)]+red_player_box)
                             #if you press "end turn"
                             if type(target) == str:
                                 print("end turn")
