@@ -597,6 +597,7 @@ def main():
             del deck[0]
 
     class char:
+
         #[lives, description]
         identity = [[4, "Bart Cassidy", "Each time he is hit, he draws a card"],
                     [4, "Black Jack", "He shows the second card he draws. On Heart or Diamonds, he draws one more card"],
@@ -651,7 +652,7 @@ def main():
                     return 0
             #program what happens if something plays a card on you
 
-
+ 
     def help():
         help_text = gamefont.render("See console.",0,(50,0,0))
         screen.blit(help_text, (mid_width(help_text),50))
@@ -696,14 +697,18 @@ def main():
     def preparation():
         global cards
         cards = cards_()
+       
         #determining role cards
         global plnum
         plnum = None
         while plnum == None:
-            plnum = 4
+            plnum = 2
+            if plnum == 2:
+                print("There is one sheriff, one outlaws")
+                players = ["Sheriff", "Outlaw"]
             #commented just for testing
             #plnum = int(input("how many people do you want to play against? 4-7 players: \n"))
-            if plnum == 4:
+            elif plnum == 4:
                 print("There is one sheriff, one renegade, and two outlaws")
                 players = ["Sheriff", "Renegade", "Outlaw", "Outlaw"]
             elif plnum == 5:
@@ -716,7 +721,7 @@ def main():
                 print("There is one sheriff, one renegade, three outlaws, and two deputies")
                 players = ["Sheriff", "Renegade", "Outlaw", "Outlaw", "Deputy", "Outlaw", "Deputy"]
             else:
-                print("You can't play with that number of players")
+            #     print("You can't play with that number of players")
                 plnum = None
                 #time.sleep(1)
         #time.sleep(1)
