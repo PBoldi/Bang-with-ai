@@ -115,17 +115,17 @@ def main():
 
                     #Blue cards
                     # #guns, 4th index is range
-                    # ("Volcanic",10, 's', 1), ("Volcanic",10, 'c', 1),
-                    # ("Schofield",11, 'c', 2), ("Schofield",12, 'c', 2), ("Schofield",13, 'c', 2),
-                    # ("Remington",13, 'c', 3), ("Rev. Carabine", 1, 'c', 4), ("Winchester", 8, 's', 5),
-                    # #2 "Mustang" cards
-                    # ("Mustang", 8, 'h'), ("Mustang", 9, 'h'),
+                    ("Volcanic",10, 's', 1), ("Volcanic",10, 'c', 1),
+                    ("Schofield",11, 'c', 2), ("Schofield",12, 'c', 2), ("Schofield",13, 'c', 2),
+                    ("Remington",13, 'c', 3), ("Rev. Carabine", 1, 'c', 4), ("Winchester", 8, 's', 5),
+                    #2 "Mustang" cards
+                    ("Mustang", 8, 'h'), ("Mustang", 9, 'h'),
                     # #3 "Jail" cards
                     # ("Jail",10, 's'), ("Jail",11, 's'), ("Jail", 4, 'h'),
-                    # #2 "Barrel" cards
-                    # ("Barrel",12, 's'), ("Barrel",13, 's'),
-                    # #1 "Scope" cards
-                    # ("Scope", 1, 's'),
+                    #2 "Barrel" cards
+                    ("Barrel",12, 's'), ("Barrel",13, 's'),
+                    #1 "Scope" cards
+                    ("Scope", 1, 's'),
                     # #1 "Dynamite" card
                     # ("Dynamite", 2, 'h')
                     ]
@@ -206,7 +206,7 @@ def main():
 
             #The range of the gun "turn" is carrying
             if no_gun == True:
-                gun_range == 1
+                gun_range = 1
             else:
                 gun_range = blue_cards[turn][0][3]
             
@@ -312,12 +312,14 @@ def main():
             target_box -= 1
             #if you click in any of the blue card boxes
             if target_box < items:
+                print(target_box)
                 #Makes an unnested list of all the blue cards
                 b_c_unnested = [blue_cards[i][j] for i in range(plnum) for j in range(len(blue_cards[i]))]
                 #records how many blue cards each player has
                 b_c_len = [len(blue_cards[i]) for i in range(plnum)]
                 #[3,1,2,1]
                 #target box = 0
+                print("blue cards", blue_cards)
                 print("b_c_unnested: ", b_c_unnested)
                 #(0,1,2)("3")(4,5)(6)
                 target_item = target_box+len(blue_cards[0])
@@ -326,32 +328,34 @@ def main():
                     if card_played == "Cat Balou":
                         if b_c_unnested[target_item][0] in [*map(itemgetter(0), blue_cards[target_box])]:
                             discard.append(b_c_unnested[target_item])
-                            del b_c_unnested[target_item]
-                            self.pre_card(card_num)
                     #if a "Panic!" is played
                     elif card_played == "Panic!":
                         #target needs to be in range (1 away)
-                        if gun_range(target_box, True) == True:
+                        if self.gun_range(target_box, True) == True:
                             in_hand[0].append(b_c_unnested[target_item])
-                            del b_c_unnested[target_item]
-                            self.pre_card(card_num)
+                    del b_c_unnested[target_item]
+                    # del blue_cards[target_box]
+                    self.pre_card(card_num)
+
                 else:
                     message("You can't use your {} on their Colt .45!".format(card_played))
-
+                print(b_c_unnested)
+                print(in_hand[0])
+                print(discard)
                 #putting blue_cards back together. The commented loop is too bulky so I used the generator beneath it
-                """
-                blue_cards = [[] for i in range(plnum)]
-                for i in range(plnum):
-                    for j in range(b_c_len[i]):
-                        blue_cards[i].append(b_c_unnested[0])
-                """
+                
+                # blue_cards = [[] for i in range(plnum)]
+                # for i in range(plnum):
+                #     for j in range(b_c_len[i]):
+                #         blue_cards[i].append(b_c_unnested[0])
+                
                 #[[(),(),()],[()],[(),()],[()]]
-                blue_cards = [[b_c_unnested[i] for j in range(b_c_len[i])] for i in range(plnum)]
+                # blue_cards = [[b_c_unnested[i] for j in range(b_c_len[i])] for i in range(plnum)]
 
             #if you click on their name
             elif target_box >= items:
                 #print("clicked on their name")
-                target = target_box - items    + 1
+                target = target_box - items + 1
                 print("target", target)
                 if len(in_hand[target]) != 0:
                     rand = random.randrange(len(in_hand[target]))
@@ -779,8 +783,8 @@ def main():
         #print(in_hand)
         #in_hand = [[bang,missed],[general store, volcanic]]
         global blue_cards
-        blue_cards = [[("Colt .45","","",1), ("Mustang","",""), ("Barrel","","")] for i in range(plnum)]
-
+        blue_cards = [[("Colt .45","","",1), ("Barrel","","")] for i in range(plnum)]
+        #, ("Mustang","",""), ("Barrel","","")
         """
         lives = ["" for i in range(plnum)]
         for i in range(plnum):
